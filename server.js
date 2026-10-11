@@ -6,6 +6,12 @@ const fs = require("fs");
 const { initializeDatabase } = require('./connect.js')
 
 const app = express()
+app.use((req, res, next) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
+
 
 app.use(fileUpload());
 app.use(express.static("public"))
