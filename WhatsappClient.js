@@ -13,20 +13,26 @@ const authenticatedClients = {}
 const qrcodes = {}
 
 function startClient(id) {
-    clients[id] = new Client({
+        clients[id] = new Client({
         authStrategy: new LocalAuth({
             clientId: id
         }),
         puppeteer: { 
             headless: true, 
-            executablePath: '/usr/bin/google-chrome',
-            // executeablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
-            // executablePath: 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
+            // Render üzerinde kurulu olan güncel Chrome yolunu otomatik bulması için executablePath satırını sildik
             args: [
-                 '--no-sandbox',
+                '--no-sandbox',
+                '--disable-setuid-sandbox',
+                '--disable-dev-shm-usage',
+                '--disable-accelerated-2d-canvas',
+                '--no-first-run',
+                '--no-zygote',
+                '--single-process',
+                '--disable-gpu'
             ]
         },
     })
+
 
     clients[id].initialize().catch(err => console.log(err))
     
